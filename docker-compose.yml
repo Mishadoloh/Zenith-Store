@@ -1,0 +1,66 @@
+name: zenith-store
+
+services:
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: adminpassword
+      POSTGRES_DB: zenith_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  catalog-service:
+    build: 
+      context: ./backend/catalog-service
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://admin:adminpassword@db:5432/zenith_db
+    depends_on:
+      - db
+    volumes:
+      - ./backend/catalog-service/app:/app/app
+
+  order-service:
+    build:
+      context: ./backend/order-service
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+    environment:
+      - DATABASE_URL=postgresql://admin:adminpassword@db:5432/zenith_db
+    depends_on:
+      - db
+
+  storefront:
+    build:
+      context: ./frontend/storefront-next
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_CATALOG_API=http://localhost:8000
+      - NEXT_PUBLIC_ORDER_API=http://localhost:8081
+    depends_on:
+      - catalog-service
+      - order-service
+
+  admin-dashboard:
+    build:
+      context: ./frontend/admin-vue
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - VITE_CATALOG_API=http://localhost:8000
+      - VITE_ORDER_API=http://localhost:8081
+    depends_on:
+      - catalog-service
+      - order-service
+
+volumes:
+  postgres_data:
