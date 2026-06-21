@@ -5,7 +5,6 @@ import { WishlistProvider } from '@/context/WishlistContext';
 import { CompareProvider } from '@/context/CompareContext';
 import { AuthProvider } from '@/context/AuthContext';
 import { LanguageProvider } from '@/context/LanguageContext';
-import AuthGate from '@/components/AuthGate';
 import Navbar from '@/components/Navbar';
 import CartSidebar from '@/components/CartSidebar';
 import Footer from '@/components/Footer';
@@ -27,12 +26,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <CompareProvider>
                 <AuthProvider>
                   <ToastProvider>
-                    <AuthGate>
-                      <Navbar />
-                      <CartSidebar />
-                      {children}
-                      <Footer />
-                    </AuthGate>
+                    <Navbar />
+                    <CartSidebar />
+                    {children}
+                    <Footer />
                   </ToastProvider>
                 </AuthProvider>
               </CompareProvider>
@@ -43,6 +40,3 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     </html>
   );
 }
-
-
-
