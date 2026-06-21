@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useTranslation } from '@/context/LanguageContext';
 import { useState, useEffect } from 'react';
+import { API_BASE_URL } from '@/lib/api';
 
 const benefits = [
   {
@@ -119,7 +120,7 @@ export default function CareersPage() {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const res = await fetch('http://localhost:8002/api/careers/jobs');
+        const res = await fetch(`${API_BASE_URL}/api/careers/jobs`);
         if (!res.ok) throw new Error('Failed to fetch');
         const data = await res.json();
         setJobs(Array.isArray(data) ? data : fallbackJobs);

@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useTranslation } from '@/context/LanguageContext';
 import { useState } from 'react';
+import { API_BASE_URL } from '@/lib/api';
 
 const contactCards = [
   {
@@ -82,7 +83,7 @@ export default function ContactPage() {
     setStatus('loading');
     setErrorMsg('');
     try {
-      const res = await fetch('http://localhost:8002/api/support/contact', {
+      const res = await fetch(`${API_BASE_URL}/api/support/contact`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),

@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useTranslation } from '@/context/LanguageContext';
 import { useState, useCallback } from 'react';
+import { API_BASE_URL } from '@/lib/api';
 
 const trackingStatuses = [
   { key: 'processed', label: 'Order Processed', description: 'Your order has been received and verified by our fulfillment team.' },
@@ -126,7 +127,7 @@ export default function TrackOrderPage() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(`http://localhost:8002/api/support/orders/track/${id}`);
+      const res = await fetch(`${API_BASE_URL}/api/support/orders/track/${id}`);
       if (!res.ok) throw new Error(`Order not found (status ${res.status})`);
       const data = await res.json();
       setTrackingData(data);

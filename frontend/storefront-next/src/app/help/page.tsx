@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useTranslation } from '@/context/LanguageContext';
+import { API_BASE_URL } from '@/lib/api';
 
 interface FAQ {
   category: string;
@@ -21,7 +22,7 @@ export default function HelpCenter() {
     async function fetchFaqs() {
       setIsLoading(true);
       try {
-        const res = await fetch(`http://localhost:8002/api/support/faqs?lang=${language}`);
+        const res = await fetch(`${API_BASE_URL}/api/support/faqs?lang=${language}`);
         if (res.ok) {
           const data = await res.json();
           setFaqs(data);
