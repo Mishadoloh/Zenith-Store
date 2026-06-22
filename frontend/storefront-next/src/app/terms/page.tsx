@@ -53,7 +53,7 @@ export default function TermsPage() {
       {/* Hero */}
       <div style={hero}>
         <div style={bc}>
-          <Link href="/" style={{ color: 'var(--text-3)', textDecoration: 'none' }}>Home</Link>
+          <Link href="/" style={{ color: 'var(--text-3)', textDecoration: 'none' }}>{t('home')}</Link>
           <span>/</span>
           <span style={{ color: 'var(--text-1)' }}>Terms of Service</span>
         </div>

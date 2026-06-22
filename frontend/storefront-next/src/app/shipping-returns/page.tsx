@@ -78,7 +78,7 @@ export default function ShippingReturnsPage() {
     <div style={cs}>
       <div style={hero}>
         <div style={bc}>
-          <Link href="/" style={{ color: 'var(--text-3)', textDecoration: 'none' }}>Home</Link>
+          <Link href="/" style={{ color: 'var(--text-3)', textDecoration: 'none' }}>{t('home')}</Link>
           <span>/</span>
           <span style={{ color: 'var(--text-1)' }}>Shipping &amp; Returns</span>
         </div>
@@ -159,7 +159,7 @@ export default function ShippingReturnsPage() {
         {/* Returns Process */}
         <section style={{ marginBottom: '72px' }}>
           <h2 style={{ fontSize: '28px', fontWeight: 700, color: 'var(--text-1)', marginBottom: '8px' }}>Returns Process</h2>
-          <p style={{ fontSize: '15px', color: 'var(--text-2)', marginBottom: '36px' }}>Returning an item is simple. Follow these three steps and we'll handle the rest.</p>
+          <p style={{ fontSize: '15px', color: 'var(--text-2)', marginBottom: '36px' }}>Returning an item is simple. Follow these three steps and we&apos;ll handle the rest.</p>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}>
             {returnSteps.map((step, idx) => (

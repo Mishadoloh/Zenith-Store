@@ -5,6 +5,7 @@ import { useCompare } from '@/context/CompareContext';
 import { useCart } from '@/context/CartContext';
 import { useToast } from '@/components/ToastProvider';
 import { useTranslation } from '@/context/LanguageContext';
+import { Product } from '@/types';
 
 function StarRating({ rating }: { rating: number }) {
   return (
@@ -24,7 +25,7 @@ export default function ComparePage() {
   const { addToast } = useToast();
   const { t } = useTranslation();
 
-  const handleAddToCart = (product: any) => {
+  const handleAddToCart = (product: Product) => {
     addItem(product);
     addToast(`"${product.title.slice(0, 24)}..." added to cart`);
   };

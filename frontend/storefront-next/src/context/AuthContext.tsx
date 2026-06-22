@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 import { API_BASE_URL } from '@/lib/api';
 
 interface User {
@@ -22,23 +22,31 @@ interface AuthCtx {
 const Ctx = createContext<AuthCtx | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
-  const [token, setToken] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    // Check localStorage
-    try {
-      const savedToken = localStorage.getItem('zenith_auth_token');
-      const savedUser = localStorage.getItem('zenith_auth_user');
-      if (savedToken && savedUser) {
-        setToken(savedToken);
-        setUser(JSON.parse(savedUser));
+  const [user, setUser] = useState<User | null>(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem('zenith_auth_user');
+        return saved ? JSON.parse(saved) : null;
+      } catch {
+        return null;
       }
-    } catch {}
-    setIsLoading(false);
-  }, []);
+    }
+    return null;
+  });
+
+  const [token, setToken] = useState<string | null>(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        return localStorage.getItem('zenith_auth_token');
+      } catch {
+        return null;
+      }
+    }
+    return null;
+  });
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const register = async (name: string, email: string, pass: string): Promise<boolean> => {
     setIsLoading(true);
@@ -56,8 +64,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setIsLoading(false);
       // Auto login after registration
       return await login(email, pass);
-    } catch (e: any) {
-      setError(e.message || 'Network error');
+    } catch (e: unknown) {
+      setError(e instanceof Error ? e.message : 'Network error');
       setIsLoading(false);
       return false;
     }
@@ -83,8 +91,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       localStorage.setItem('zenith_auth_user', JSON.stringify(data.user));
       setIsLoading(false);
       return true;
-    } catch (e: any) {
-      setError(e.message || 'Network error');
+    } catch (e: unknown) {
+      setError(e instanceof Error ? e.message : 'Network error');
       setIsLoading(false);
       return false;
     }

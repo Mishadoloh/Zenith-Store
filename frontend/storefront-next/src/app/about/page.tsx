@@ -110,7 +110,7 @@ export default function AboutPage() {
         <div style={{ position: 'absolute', bottom: '-80px', right: '-40px', width: '320px', height: '320px', borderRadius: '50%', background: 'rgba(16,185,129,0.06)', filter: 'blur(80px)', pointerEvents: 'none' }} />
 
         <div style={bc}>
-          <Link href="/" style={{ color: 'var(--text-3)', textDecoration: 'none' }}>Home</Link>
+          <Link href="/" style={{ color: 'var(--text-3)', textDecoration: 'none' }}>{t('home')}</Link>
           <span>/</span>
           <span style={{ color: 'var(--text-1)' }}>About</span>
         </div>
@@ -162,7 +162,7 @@ export default function AboutPage() {
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
               <h3 style={{ fontSize: '16px', fontWeight: 700, marginBottom: '4px', color: 'var(--text-1)' }}>Our Timeline</h3>
-              {milestones.map((m, i) => (
+              {milestones.map((m) => (
                 <div key={m.year} style={{ display: 'flex', gap: '14px', alignItems: 'flex-start' }}>
                   <div style={{ flexShrink: 0, padding: '4px 12px', background: 'rgba(99,102,241,0.15)', border: '1px solid rgba(99,102,241,0.25)', borderRadius: '6px', fontSize: '12px', fontWeight: 700, color: 'var(--accent-light)', whiteSpace: 'nowrap' }}>{m.year}</div>
                   <p style={{ fontSize: '13px', color: 'var(--text-2)', margin: 0, lineHeight: 1.65, paddingTop: '2px' }}>{m.event}</p>

@@ -3,26 +3,24 @@
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
 import { useTranslation } from '@/context/LanguageContext';
-import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import AuthGate from '@/components/AuthGate';
 
 export default function ProfilePage() {
   const { user, logout, isLoading } = useAuth();
   const { t } = useTranslation();
-  const router = useRouter();
-  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
-
-  // Detect and set local storage theme settings on mount
-  useEffect(() => {
-    const savedTheme = localStorage.getItem('zenith_theme') as 'dark' | 'light';
-    if (savedTheme) {
-      setTheme(savedTheme);
-      document.body.className = savedTheme;
-    } else {
-      document.body.className = 'dark';
+  const [theme, setTheme] = useState<'dark' | 'light'>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('zenith_theme') as 'dark' | 'light';
+      return saved || 'dark';
     }
-  }, []);
+    return 'dark';
+  });
+
+  // Keep body class synced with theme
+  useEffect(() => {
+    document.body.className = theme;
+  }, [theme]);
 
   // Theme toggle function
   const toggleTheme = () => {

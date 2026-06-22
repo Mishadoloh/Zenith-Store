@@ -131,8 +131,8 @@ export default function TrackOrderPage() {
       if (!res.ok) throw new Error(`Order not found (status ${res.status})`);
       const data = await res.json();
       setTrackingData(data);
-    } catch (err: any) {
-      setError(err.message || 'Failed to fetch tracking information. Please try again.');
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Failed to fetch tracking information. Please try again.');
       setTrackingData(null);
     } finally {
       setLoading(false);
@@ -169,7 +169,7 @@ export default function TrackOrderPage() {
 
       <div style={hero}>
         <div style={bc}>
-          <Link href="/" style={{ color: 'var(--text-3)', textDecoration: 'none' }}>Home</Link>
+          <Link href="/" style={{ color: 'var(--text-3)', textDecoration: 'none' }}>{t('home')}</Link>
           <span>/</span>
           <span style={{ color: 'var(--text-1)' }}>Track Order</span>
         </div>
@@ -308,7 +308,7 @@ export default function TrackOrderPage() {
                   <path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3M12 17h.01" />
                 </svg>
               </div>
-              <h3 style={{ fontSize: '15px', fontWeight: 700, marginBottom: '8px' }}>Can't find your order?</h3>
+              <h3 style={{ fontSize: '15px', fontWeight: 700, marginBottom: '8px' }}>Can&apos;t find your order?</h3>
               <p style={{ fontSize: '13px', color: 'var(--text-2)', margin: 0, lineHeight: 1.6 }}>
                 Check your confirmation email for the order ID. Need help? <Link href="/contact" style={{ color: 'var(--accent-light)', textDecoration: 'none' }}>Contact our support team</Link>.
               </p>

@@ -155,7 +155,7 @@ export default function CareersPage() {
         <div style={{ position: 'absolute', top: '-60px', right: '-60px', width: '300px', height: '300px', borderRadius: '50%', background: 'rgba(167,139,250,0.08)', filter: 'blur(60px)', pointerEvents: 'none' }} />
         <div style={{ position: 'absolute', bottom: '-40px', left: '-40px', width: '240px', height: '240px', borderRadius: '50%', background: 'rgba(99,102,241,0.06)', filter: 'blur(50px)', pointerEvents: 'none' }} />
         <div style={bc}>
-          <Link href="/" style={{ color: 'var(--text-3)', textDecoration: 'none' }}>Home</Link>
+          <Link href="/" style={{ color: 'var(--text-3)', textDecoration: 'none' }}>{t('home')}</Link>
           <span>/</span>
           <span style={{ color: 'var(--text-1)' }}>Careers</span>
         </div>

@@ -55,7 +55,7 @@ export default function PrivacyPage() {
       {/* Hero */}
       <div style={hero}>
         <div style={bc}>
-          <Link href="/" style={{ color: 'var(--text-3)', textDecoration: 'none' }}>Home</Link>
+          <Link href="/" style={{ color: 'var(--text-3)', textDecoration: 'none' }}>{t('home')}</Link>
           <span>/</span>
           <span style={{ color: 'var(--text-1)' }}>Privacy Policy</span>
         </div>
@@ -175,7 +175,7 @@ export default function PrivacyPage() {
                 </div>
               ))}
             </div>
-            <p style={pStyle}>You can control and manage cookies through your browser settings at any time. Please note that disabling certain cookies may affect the functionality of our website. We also honor browser-level "Do Not Track" signals and Global Privacy Control (GPC) headers.</p>
+            <p style={pStyle}>You can control and manage cookies through your browser settings at any time. Please note that disabling certain cookies may affect the functionality of our website. We also honor browser-level &quot;Do Not Track&quot; signals and Global Privacy Control (GPC) headers.</p>
             <p style={pStyle}>Our cookies have a maximum retention period of 12 months, after which they are automatically deleted or require renewal of consent.</p>
           </section>
 

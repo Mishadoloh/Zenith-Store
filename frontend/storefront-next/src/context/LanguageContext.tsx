@@ -1,7 +1,8 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 import { getProductTranslation } from '@/lib/product_translations';
+import { Product } from '@/types';
 
 
 export type Language = 'en' | 'uk' | 'es' | 'de';
@@ -1259,22 +1260,23 @@ interface LanguageCtx {
   language: Language;
   setLanguage: (lang: Language) => void;
   t: (key: string, replacements?: Record<string, string>) => string;
-  tProduct: (product: any) => any;
+  tProduct: (product: Product) => Product;
 }
 
 const Ctx = createContext<LanguageCtx | undefined>(undefined);
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [language, setLanguageState] = useState<Language>('en');
-
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem('zenith_lang') as Language;
-      if (saved && (saved === 'en' || saved === 'uk' || saved === 'es' || saved === 'de')) {
-        setLanguageState(saved);
-      }
-    } catch {}
-  }, []);
+  const [language, setLanguageState] = useState<Language>(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem('zenith_lang') as Language;
+        if (saved && (saved === 'en' || saved === 'uk' || saved === 'es' || saved === 'de')) {
+          return saved;
+        }
+      } catch {}
+    }
+    return 'en';
+  });
 
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
@@ -1297,7 +1299,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     return text;
   };
 
-  const tProduct = (product: any): any => {
+  const tProduct = (product: Product): Product => {
     const formatKey = (str: string) => str.toLowerCase().replace(/[^a-z0-9]/g, '_');
     
     const getTranslationOrOriginal = (key: string, original: string) => {
@@ -1320,7 +1322,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
         const transValKey = `spec_val_${formatKey(v as string)}`;
         acc[getTranslationOrOriginal(transKey, k)] = getTranslationOrOriginal(transValKey, v as string);
         return acc;
-      }, {} as Record<string, string>) : undefined
+      }, {} as Record<string, string>) : {}
     };
   };
 

@@ -91,9 +91,9 @@ export default function ContactPage() {
       if (!res.ok) throw new Error(`Server error: ${res.status}`);
       setStatus('success');
       setForm({ name: '', email: '', subject: '', message: '' });
-    } catch (err: any) {
+    } catch (err: unknown) {
       setStatus('error');
-      setErrorMsg(err.message || 'Something went wrong. Please try again.');
+      setErrorMsg(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
     }
   };
 
@@ -106,8 +106,8 @@ export default function ContactPage() {
   const labelCss: React.CSSProperties = { display: 'block', fontSize: '13px', fontWeight: 600, color: 'var(--text-2)', marginBottom: '8px' };
   const btnCss: React.CSSProperties = { padding: '14px 36px', background: 'var(--accent-light)', color: '#fff', border: 'none', borderRadius: '10px', fontWeight: 700, fontSize: '15px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '8px', transition: 'opacity 0.2s' };
 
-  const onFocus = (e: React.FocusEvent<any>) => { e.target.style.borderColor = 'var(--accent-light)'; };
-  const onBlur = (e: React.FocusEvent<any>) => { e.target.style.borderColor = 'var(--border)'; };
+  const onFocus = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => { e.target.style.borderColor = 'var(--accent-light)'; };
+  const onBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => { e.target.style.borderColor = 'var(--border)'; };
 
   return (
     <div style={cs}>
@@ -118,9 +118,9 @@ export default function ContactPage() {
 
       <div style={hero}>
         <div style={bc}>
-          <Link href="/" style={{ color: 'var(--text-3)', textDecoration: 'none' }}>Home</Link>
+          <Link href="/" style={{ color: 'var(--text-3)', textDecoration: 'none' }}>{t('home')}</Link>
           <span>/</span>
-          <span style={{ color: 'var(--text-1)' }}>Contact</span>
+          <span style={{ color: 'var(--text-1)' }}>{t('footer_contact_us')}</span>
         </div>
         <h1 style={{ fontSize: '44px', fontWeight: 800, marginBottom: '16px', letterSpacing: '-0.02em' }}>Get In Touch</h1>
         <p style={{ fontSize: '17px', color: 'var(--text-2)', maxWidth: '480px', margin: '0 auto' }}>
